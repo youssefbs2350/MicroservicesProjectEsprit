@@ -32,4 +32,4 @@ public class ProductEventConsumer {
         System.out.println("❗ Message d'erreur : " + errorMessage);
     }
 }
-//
+// This class listens to Kafka topics related to product events and prints the details of the received messages.
