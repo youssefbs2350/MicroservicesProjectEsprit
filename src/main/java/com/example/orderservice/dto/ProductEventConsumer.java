@@ -32,3 +32,4 @@ public class ProductEventConsumer {
         System.out.println("❗ Message d'erreur : " + errorMessage);
     }
 }
+//
