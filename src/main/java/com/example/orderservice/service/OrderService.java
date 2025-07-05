@@ -9,7 +9,6 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import com.example.orderservice.kafka.KafkaProducerService; // ✅ Importer le service Kafka
 import java.util.List;
 import java.util.Optional;
 
@@ -23,8 +22,6 @@ public class OrderService {
     @Autowired
     private ProductClient productClient;
 
-    @Autowired
-    private KafkaProducerService kafkaProducerService; // ✅ Injecter le producer
     private static final String PRODUCT_SERVICE = "productService";
 
     public List<Order> getAllOrders() {
@@ -80,9 +77,7 @@ public class OrderService {
         response.setCustomerName(customerName);
         response.setProduct(product);
 
-        // ✅ Envoyer l'événement à Kafka
-        kafkaProducerService.sendOrderCreatedEvent(response);
-        System.out.println("✅ Commande créée et événement envoyé à Kafka.");
         return response;
     }
+
 }
