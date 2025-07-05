@@ -14,6 +14,12 @@ public class KafkaProducerService {
     private KafkaTemplate<String, OrderResponseDTO> kafkaTemplate;
 
     public void sendOrderCreatedEvent(OrderResponseDTO order) {
-        kafkaTemplate.send(TOPIC, order);
+        try {
+            kafkaTemplate.send(TOPIC, order);
+        } catch (Exception e) {
+            System.err.println("❌ Kafka not available. Skipping event publish. Reason: " + e.getMessage());
+            // Tu peux logguer ou ignorer selon le besoin
+        }
+
     }
 }
