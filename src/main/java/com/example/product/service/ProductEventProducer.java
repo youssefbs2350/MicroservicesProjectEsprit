@@ -5,7 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
 @Service
 public class ProductEventProducer {
 
@@ -22,12 +23,12 @@ public class ProductEventProducer {
     private KafkaTemplate<String, OrderDTO> kafkaTemplate; // Use your event DTO here
 
     public void sendProductCreatedEvent(OrderDTO product) {
-        kafkaTemplate.send(productCreatedTopic, product.getId(), product);
+        kafkaTemplate.send(productCreatedTopic, product);
         System.out.println("✅ Sent product created event for product ID: " + product.getId());
     }
 
     public void sendProductUpdatedEvent(OrderDTO product) {
-        kafkaTemplate.send(productUpdatedTopic, product.getId(), product);
+        kafkaTemplate.send(productUpdatedTopic, product);
         System.out.println("✅ Sent product updated event for product ID: " + product.getId());
     }
 
