@@ -10,8 +10,9 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 @Service
 public class ProductEventProducer {
 
-    @Value("${kafka.topic.product.created}")
-    private String productCreatedTopic;
+   // @Value("${kafka.topic.product.created}")
+
+    private String productCreatedTopic= "product-created";
 
     @Value("${kafka.topic.product.updated}")
     private String productUpdatedTopic;
