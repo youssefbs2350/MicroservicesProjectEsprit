@@ -80,4 +80,12 @@ public class OrderService {
         return response;
     }
 
+    public Object save(Order order) {
+        return orderRepository.save(order);
+    }
+
+    public void deleteOrderById(Long id) {
+        orderRepository.deleteById(id);
+
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.orderservice.service;
+/*package com.example.orderservice.service;
 
 import com.example.orderservice.dto.OrderResponseDTO;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -15,3 +15,4 @@ public class KafkaConsumerTestService {
         System.out.println("Quantity: " + order.getQuantity());
     }
 }
+*/

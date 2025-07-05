@@ -42,8 +42,36 @@ public class OrderController {
         return orderService.createOrder(productId, customerName, quantity);
     }
 
+
     @GetMapping("/test-product/{id}")
     public ProductDTO testProductFeign(@PathVariable String id) {
         return productClient.getProductById(id);
     }
+    @GetMapping("/test-product-fallback/{id}")
+    public ProductDTO testProductFeignFallback(@PathVariable String id) {
+        return productClient.getProductById(id);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order order) {
+        return orderService.getOrderById(id)
+                .map(existingOrder -> {
+                    existingOrder.setProductId(order.getProductId());
+                    existingOrder.setQuantity(order.getQuantity());
+                    existingOrder.setPrice(order.getPrice());
+                    existingOrder.setCustomerName(order.getCustomerName());
+                    Order updatedOrder = (Order) orderService.save(existingOrder);
+                    return ResponseEntity.ok(updatedOrder);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
+        if (orderService.getOrderById(id).isPresent()) {
+            orderService.deleteOrderById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
